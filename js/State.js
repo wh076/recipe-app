@@ -3,14 +3,11 @@ export class State {
         this.recipes = [];
     }
 
-    // Сохраняем новые данные из API
     setRecipes(data) {
         this.recipes = data;
     }
 
-    // Получаем текущие данные (с возможностью сортировки)
     getRecipes(sortType = 'default') {
-        // Создаем копию массива, чтобы не мутировать оригинал
         let sortedRecipes = [...this.recipes];
 
         if (sortType === 'time-asc') {
