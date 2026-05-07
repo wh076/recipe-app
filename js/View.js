@@ -24,25 +24,37 @@ export class View {
 
     // Создание одной карточки через createElement
     createRecipeCard(recipe) {
-        const card = document.createElement('article');
-        card.className = 'recipe-card'; 
+    const card = document.createElement('article');
+    card.className = 'recipe-card';
 
-        const image = document.createElement('img');
-        image.src = recipe.image;
-        image.alt = recipe.title;
+    const image = document.createElement('img');
+    image.src = recipe.image;
+    image.alt = recipe.title;
 
-        const title = document.createElement('h3');
-        title.textContent = recipe.title;
+    const content = document.createElement('div');
+    content.className = 'card-content';
 
-        const timeInfo = document.createElement('p');
-        timeInfo.textContent = `⏱ Время: ${recipe.readyInMinutes} мин.`;
+    const title = document.createElement('h3');
+    title.textContent = recipe.title;
 
-        card.appendChild(image);
-        card.appendChild(title);
-        card.appendChild(timeInfo);
+    const timeInfo = document.createElement('p');
+    timeInfo.textContent = `⏱ ${recipe.readyInMinutes} мин.`;
 
-        return card;
-    }
+    // Интерактивный элемент: кнопка
+    const btn = document.createElement('button');
+    btn.textContent = 'Подробнее';
+    btn.className = 'card-btn';
+    btn.onclick = () => alert(`Вы выбрали рецепт: ${recipe.title}`);
+
+    content.appendChild(title);
+    content.appendChild(timeInfo);
+    content.appendChild(btn);
+
+    card.appendChild(image);
+    card.appendChild(content);
+
+    return card;
+}
 
     // Отрисовка массива карточек
     renderRecipes(recipes) {

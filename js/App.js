@@ -27,7 +27,12 @@ export class App {
         this.searchInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') this.handleSearch();
         });
-
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                this.searchInput.value = '';
+                this.handleSearch();
+    }
+});
         // Слушатель для сортировки: если выбрали другой пункт, сразу перерисовываем
         this.sortFilter.addEventListener('change', () => this.handleSort());
     }
