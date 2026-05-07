@@ -22,7 +22,7 @@ export class App {
 
     init() {
         this.startBtn.addEventListener('click', () => this.handleStart());
-
+        
         this.usernameInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') this.handleStart();
         });
@@ -33,14 +33,21 @@ export class App {
             if (e.key === 'Enter') this.handleSearch();
         });
 
+        this.sortFilter.addEventListener('change', () => this.handleSort());
+
+        // Закрытие модалки
+        this.view.closeModalBtn.onclick = () => this.view.hideModal();
+        window.onclick = (event) => {
+            if (event.target === this.view.modal) this.view.hideModal();
+        };
+
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
+                this.view.hideModal();
                 this.searchInput.value = '';
                 this.handleSearch();
             }
         });
-
-        this.sortFilter.addEventListener('change', () => this.handleSort());
     }
 
     handleStart() {
@@ -48,6 +55,7 @@ export class App {
         if (!username) return alert('Введите имя');
 
         this.greetingScreen.classList.remove('active');
+        this.greetingScreen.classList.add('hidden');
         this.mainScreen.classList.remove('hidden');
         this.mainScreen.classList.add('active');
         this.welcomeMessage.textContent = `Привет, ${username}!`;
@@ -58,7 +66,6 @@ export class App {
     async handleSearch() {
         const query = this.searchInput.value.trim();
         const diet = this.dietFilter.value;
-
         const recipes = await this.api.fetchRecipes(query, diet);
         this.state.setRecipes(recipes);
         this.handleSort();
@@ -67,6 +74,6 @@ export class App {
     handleSort() {
         const sortType = this.sortFilter.value;
         const sortedRecipes = this.state.getRecipes(sortType);
-        this.view.renderRecipes(sortedRecipes);
+        this.view.renderRecipes(sortedRecipes, (recipe) => this.view.showModal(recipe));
     }
 }
