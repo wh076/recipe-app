@@ -62,17 +62,29 @@ export class View {
     }
 
     showModal(recipe) {
+        // Собираем ингредиенты (API может отдавать их в разных массивах)
+        const ingredientsList = recipe.extendedIngredients 
+            ? recipe.extendedIngredients 
+            : [...(recipe.missedIngredients || []), ...(recipe.usedIngredients || [])];
+            
+        // Формируем HTML список
+        const ingredientsHTML = ingredientsList.length > 0 
+            ? ingredientsList.map(ing => `<li>🥗 ${ing.original}</li>`).join('') 
+            : '<li>Информация об ингредиентах не найдена</li>';
+
         this.modalBody.innerHTML = `
-            <h2>${recipe.title}</h2>
-            <img src="${recipe.image}" style="width:100%; border-radius:8px; margin: 15px 0;">
-            <div style="text-align: left; margin: 20px 0;">
+            <h2 class="modal-title">${recipe.title}</h2>
+            <img class="modal-img" src="${recipe.image}" alt="${recipe.title}">
+            <div class="modal-ingredients">
                 <h3>Ингредиенты:</h3>
                 <ul>
-                    ${recipe.extendedIngredients ? recipe.extendedIngredients.map(ing => `<li>${ing.original}</li>`).join('') : 'Информация отсутствует'}
+                    ${ingredientsHTML}
                 </ul>
             </div>
-            <p><strong>Время приготовления:</strong> ${recipe.readyInMinutes} минут</p>
-            <a href="${recipe.sourceUrl}" target="_blank" class="modal-link">Посмотреть оригинал рецепта</a>
+            <div class="modal-footer">
+                <p><strong>⏱ Время приготовления:</strong> ${recipe.readyInMinutes} минут</p>
+                <a href="${recipe.sourceUrl}" target="_blank" class="modal-link">Перейти к оригиналу рецепта</a>
+            </div>
         `;
         this.modal.classList.remove('hidden');
     }

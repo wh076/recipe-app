@@ -5,15 +5,16 @@ export class Api {
     }
 
     async fetchRecipes(query = '', diet = '') {
-        const url = `${this.baseUrl}?apiKey=${this.apiKey}&query=${query}&diet=${diet}&addRecipeInformation=true&number=12`;
+        // Добавили fillIngredients=true чтобы API возвращал ингредиенты!
+        const url = `${this.baseUrl}?apiKey=${this.apiKey}&query=${query}&diet=${diet}&addRecipeInformation=true&fillIngredients=true&number=12`;
 
         try {
             const response = await fetch(url);
-            if (!response.ok) throw new Error('Network response was not ok');
+            if (!response.ok) throw new Error('Ошибка сети');
             const data = await response.json();
             return data.results;
         } catch (error) {
-            console.error('Fetch error:', error);
+            console.error('Ошибка при получении данных:', error);
             return [];
         }
     }
