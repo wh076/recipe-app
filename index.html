@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healthy Food Planner</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Экран приветствия -->
+    <section id="greeting-screen" class="screen active">
+        <div class="greeting-container">
+            <h1>Добро пожаловать в Библиотеку Рецептов!</h1>
+            <p>Пожалуйста, представьтесь:</p>
+            <input type="text" id="username-input" placeholder="Ваше имя...">
+            <button id="start-btn">Далее</button>
+        </div>
+    </section>
+
+    <!-- Главный экран приложения (скрыт по умолчанию) -->
+    <section id="main-screen" class="screen hidden">
+        <header>
+            <h2 id="welcome-message">Привет, Гость!</h2>
+            <div class="controls">
+                <input type="text" id="search-input" placeholder="Поиск по ингредиентам...">
+                <select id="diet-filter">
+                    <option value="">Все диеты</option>
+                    <option value="vegetarian">Вегетарианская</option>
+                    <option value="vegan">Веганская</option>
+                    <option value="gluten free">Без глютена</option>
+                </select>
+                <select id="sort-filter">
+                    <option value="default">По умолчанию</option>
+                    <option value="time-asc">Сначала быстрые</option>
+                    <option value="time-desc">Сначала долгие</option>
+                </select>
+                <button id="search-btn">Найти</button>
+            </div>
+        </header>
+
+        <main>
+            <!-- Блок для вывода статистики -->
+            <div id="statistics-container" class="stats"></div>
+            
+            <!-- Контейнер для карточек рецептов -->
+            <div id="recipes-container" class="recipes-grid"></div>
+        </main>
+    </section>
+
+    <!-- Подключаем главный js файл как модуль -->
+    <script type="module" src="js/main.js"></script>
+    
+    <div id="recipe-modal" class="modal hidden">
+    <div class="modal-content">
+        <span id="close-modal" class="close">&times;</span>
+        <div id="modal-body">
+            </div>
+    </div>
+</div>
+</body>
+</html>
